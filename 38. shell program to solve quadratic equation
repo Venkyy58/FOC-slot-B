@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Enter coefficients a, b and c:"
+read a b c
+
+delta=$(echo "$b^2 - 4 * $a * $c" | bc -l)
+
+if (( $(echo "$delta < 0" | bc -l) )); then
+  echo "The equation has no real roots."
+elif (( $(echo "$delta == 0" | bc -l) )); then
+  root=$(echo "scale=2; -$b / (2 * $a)" | bc -l)
+  echo "The equation has one real root: $root"
+else
+  root1=$(echo "scale=2; (-$b + sqrt($delta)) / (2 * $a)" | bc -l)
+  root2=$(echo "scale=2; (-$b - sqrt($delta)) / (2 * $a)" | bc -l)
+  echo "The equation has two real roots: $root1 and $root2"
+fi
